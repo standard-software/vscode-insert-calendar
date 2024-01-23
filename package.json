@@ -1,26 +1,42 @@
 {
   "name": "vscode-insert-calendar",
   "displayName": "vscode-insert-calendar",
-  "description": "",
+  "description": "This extension inserts formatted calendar into the editor.",
   "version": "0.0.1",
+  "publisher": "SatoshiYamamoto",
+  "author": {
+    "name": "Satoshi Yamamoto",
+    "email": "standard.software.net@gmail.com",
+    "url": "https://www.facebook.com/stndardsoftware"
+  },
+  "license":"MIT",
+  "homepage": "https://github.com/standard-software/vscode-insert-calendar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/standard-software/vscode-insert-calendar"
+  },
+  "bugs": {
+    "url": "https://github.com/standard-software/vscode-insert-calendar/issues"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
     "Other"
   ],
+  "keywords": ["calendar"],
   "activationEvents": [],
-  "main": "./extension.js",
+  "main": "./src/extension.js",
   "contributes": {
     "commands": [{
       "command": "vscode-insert-calendar.helloWorld",
-      "title": "Hello World"
+      "title": "Insert Calendar : Hello World"
     }]
   },
   "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "vscode-test"
+    "lint": "eslint --fix ./src",
+    "pack": "npx -y vsce package && code --install-extension vscode-insert-calendar-0.0.1.vsix",
+    "": ""
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",
