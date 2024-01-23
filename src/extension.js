@@ -2,10 +2,10 @@ const vscode = require('vscode');
 
 const {
   registerCommand,
-  // getEditor,
+  getEditor,
   // commandQuickPick,
 
-  // insertText,
+  insertText,
   // getSelectedText,
 } = require(`./lib/libVSCode.js`);
 
@@ -14,9 +14,8 @@ function activate(context) {
   registerCommand(context,
     `vscode-insert-calendar.helloWorld`,
     () => {
-      vscode.window.showInformationMessage(
-        'Hello World from vscode-insert-calendar!'
-      );
+      const editor = getEditor(); if (!editor) { return; }
+      insertText(editor, `Hello World from vscode-insert-calendar!`)
     }
   );
 }
