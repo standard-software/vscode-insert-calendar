@@ -1,15 +1,24 @@
 const vscode = require('vscode');
 
+const {
+  registerCommand,
+  // getEditor,
+  // commandQuickPick,
+
+  // insertText,
+  // getSelectedText,
+} = require(`./lib/libVSCode.js`);
+
 function activate(context) {
 
-	console.log('Congratulations, your extension "vscode-insert-calendar" is now active!');
-
-	let disposable = vscode.commands.registerCommand('vscode-insert-calendar.helloWorld', function () {
-
-    vscode.window.showInformationMessage('Hello World from vscode-insert-calendar!');
-	});
-
-	context.subscriptions.push(disposable);
+  registerCommand(context,
+    `vscode-insert-calendar.helloWorld`,
+    () => {
+      vscode.window.showInformationMessage(
+        'Hello World from vscode-insert-calendar!'
+      );
+    }
+  );
 }
 
 function deactivate() {}
