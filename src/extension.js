@@ -11,13 +11,10 @@ const {
 
 function activate(context) {
 
-  registerCommand(context,
-    `vscode-insert-calendar.helloWorld`,
-    () => {
-      const editor = getEditor(); if (!editor) { return; }
-      insertText(editor, `Hello World from vscode-insert-calendar!`)
-    }
-  );
+  registerCommand(context, `vscode-insert-calendar.SquareCalendarThisMonth`, () => {
+    const editor = getEditor(); if (!editor) { return; }
+    insertText(editor, `Hello World from vscode-insert-calendar!`)
+  });
 }
 
 function deactivate() {}

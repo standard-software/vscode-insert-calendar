@@ -29,8 +29,8 @@
   "main": "./src/extension.js",
   "contributes": {
     "commands": [{
-      "command": "vscode-insert-calendar.helloWorld",
-      "title": "Insert Calendar : Hello World"
+      "command": "vscode-insert-calendar.SquareCalendarThisMonth",
+      "title": "Insert Calendar : Insert Square Calendar : This Month"
     }]
   },
   "scripts": {
