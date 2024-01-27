@@ -59,33 +59,30 @@ const insertTextUnSelect = (editor, str) => {
 };
 
 const insertText = (editor, str) => {
-  const updateSelections = [];
   editor.edit(editBuilder => {
     for (const selection of editor.selections) {
-      if (equalSelectionItem(selection.start, selection.end)) {
-        editBuilder.replace(selection, str);
-        updateSelections.push(true);
-      } else {
-        editBuilder.replace(selection, str);
-        updateSelections.push(false);
-      }
+      editBuilder.replace(selection, str);
     }
   }).then(() => {
-    if (updateSelections.some(v=>v)) {
-      const newSelections = [...editor.selections];
-      for (const [i, update] of updateSelections.entries()) {
-        if (update) {
-          newSelections[i] =
-          new vscode.Selection(
-            editor.selections[i].start.line,
-            editor.selections[i].start.character - str.length,
-            editor.selections[i].end.line,
-            editor.selections[i].end.character,
-          );
-        }
+    const newSelections = [];
+    for (const selection of editor.selections) {
+      if (equalSelectionItem(selection.start, selection.end)) {
+        const strLines = str.split(`\n`);
+        const selectionStartLine = selection.start.line - (strLines.length - 1);
+        const selectionStartCharactor =
+          editor.document.lineAt(selectionStartLine).text.length -
+          strLines[0].length
+        newSelections.push(new vscode.Selection(
+          selectionStartLine,
+          selectionStartCharactor,
+          selection.start.line,
+          selection.start.character
+        ));
+      } else {
+        newSelections.push(selection);
       }
-      editor.selections = newSelections;
     }
+    editor.selections = newSelections;
   });
 };
 
