@@ -81,8 +81,6 @@ const japaneseCalenderYear = (date) => {
 const dateToStringJp = (date, format,
   dayOfWeekCustomNamesShort,
   dayOfWeekCustomNamesLong,
-  ampmCustomNamesShort,
-  ampmCustomNamesLong,
 ) => {
   const rule = _dateToString.rule.Default();
   rule[`dd`] = { func: dayOfWeekEn2 };
@@ -99,18 +97,6 @@ const dateToStringJp = (date, format,
     func: (date, timezoneOffset) => dayOfWeekCustomNamesLong[
       _dateToString.rule.dayOfWeek(date, timezoneOffset)
     ]
-  };
-  rule[`AAAA`] = {
-    func: (date, timezoneOffset) =>
-      _dateToString.rule.hours(date, timezoneOffset) < 12
-        ? ampmCustomNamesLong[0]
-        : ampmCustomNamesLong[1]
-  };
-  rule[`AAA`] = {
-    func: (date, timezoneOffset) =>
-      _dateToString.rule.hours(date, timezoneOffset) < 12
-        ? ampmCustomNamesShort[0]
-        : ampmCustomNamesShort[1]
   };
   rule[`GGG`] = {
     func: (date) => {

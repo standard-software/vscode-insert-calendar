@@ -28,6 +28,38 @@
   "activationEvents": [],
   "main": "./src/extension.js",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "DateTimeCalendar",
+      "properties": {
+        "SmartInsertDate.CustomDayOfWeekLong": {
+          "default": {
+            "Sun": "日曜日",
+            "Mon": "月曜日",
+            "Tue": "火曜日",
+            "Wed": "水曜日",
+            "Thu": "木曜日",
+            "Fri": "金曜日",
+            "Sat": "土曜日"
+          },
+          "description": "Smart Insert Date : CustomDayOfWeekLong"
+        },
+        "SmartInsertDate.CustomDayOfWeekShort": {
+          "default": {
+            "Sun": "日",
+            "Mon": "月",
+            "Tue": "火",
+            "Wed": "水",
+            "Thu": "木",
+            "Fri": "金",
+            "Sat": "土"
+          },
+          "description": "Smart Insert Date : CustomDayOfWeekShort"
+        }
+
+
+      }
+    },
     "commands": [{
       "command": "vscode-insert-calendar.SquareCalendarThisMonth",
       "title": "Insert Calendar : Insert Square Calendar : This Month"
