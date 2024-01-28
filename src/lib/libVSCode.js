@@ -39,6 +39,7 @@ const commandQuickPick = (commands, placeHolder) => {
 };
 
 // VSCode editor.selections
+
 const insertText = (editor, str) => {
   editor.edit(editBuilder => {
     for (const selection of editor.selections) {
@@ -86,16 +87,27 @@ const insertTextSelected = (editor, str) => {
         && selection.start.character === selection.end.character
       ) {
         const strLines = str.split(`\n`);
-        const selectionStartLine = selection.start.line - (strLines.length - 1);
-        const selectionStartCharactor =
-          editor.document.lineAt(selectionStartLine).text.length -
-          strLines[0].length
-        newSelections.push(new vscode.Selection(
-          selectionStartLine,
-          selectionStartCharactor,
-          selection.start.line,
-          selection.start.character
-        ));
+        if (strLines.length === 0) {
+          throw new Error(`insertTextSelected`);
+        } else if (strLines.length === 1) {
+          newSelections.push(new vscode.Selection(
+            selection.start.line,
+            selection.start.character - str.length,
+            selection.end.line,
+            selection.end.character,
+          ));
+        } else {
+          const selectionStartLine = selection.start.line - (strLines.length - 1);
+          const selectionStartCharactor =
+            editor.document.lineAt(selectionStartLine).text.length -
+            strLines[0].length
+          newSelections.push(new vscode.Selection(
+            selectionStartLine,
+            selectionStartCharactor,
+            selection.start.line,
+            selection.start.character
+          ));
+        }
       } else {
         newSelections.push(selection);
       }
