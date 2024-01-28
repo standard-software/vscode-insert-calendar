@@ -179,6 +179,10 @@
       {
         "command": "vscode-insert-calendar.SelectCalendarType",
         "title": "Insert Calendar : Select Calendar Type..."
+      },
+      {
+        "command": "vscode-insert-calendar.SelectMonth",
+        "title": "Insert Calendar : Select Month..."
       }
     ]
   },
