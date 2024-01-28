@@ -229,14 +229,16 @@ const getEndDayOfWeek = (startDayOfWeek) => {
   }
 };
 
-const textCalendarLineVertical = ({
+const _textVerticalCalendar = (
   targetDates,
   dateToString,
-  pickupDate,
-  headerFormat,
-  todayFormat,
-  lineFormat,
-}) => {
+  {
+    pickupDate,
+    headerFormat,
+    todayFormat,
+    lineFormat,
+  }
+) => {
   let result = ``;
   let headerBuffer = ``;
   for (const date of targetDates) {
@@ -255,18 +257,50 @@ const textCalendarLineVertical = ({
   return result;
 };
 
-const textCalendarMonthly = ({
+const textVerticalCalendar = (
   targetDate,
   dateToString,
-  startDayOfWeek,
-  headerFormat,
-  dayOfWeekFormat,
-  dateFormat,
-  space,
-  otherMonthDate,
-}) => {
+  {
+    pickupDate,
+    headerFormat,
+    todayFormat,
+    lineFormat,
+    startDayOfWeek,
+  }
+) => {
+  const targetDates = getDateArrayWeeklyMonth(
+    targetDate, startDayOfWeek
+  );
+  return _textVerticalCalendar(
+    targetDates,
+    dateToString,
+    {
+      pickupDate,
+      headerFormat,
+      todayFormat,
+      lineFormat,
+    }
+  );
+}
+
+const _textSquareCalendar = (
+  targetDate,
+  dateToString,
+  {
+    startDayOfWeek,
+    pickupDate,
+    headerFormat,
+    dayOfWeekFormat,
+    dateFormat,
+    indent,
+    space,
+    todayLeft,
+    todayRight,
+    otherMonthDate,
+  }
+) => {
   if (![`Sun`, `Mon`].includes(startDayOfWeek)) {
-    throw new Error(`textCalendarMonthly startDayOfWeek`);
+    throw new Error(`_textSquareCalendar startDayOfWeek`);
   }
   const dayOfWeekEnShort = _dayOfWeek.names.EnglishShort();
   const weekEndDayOfWeek = getEndDayOfWeek(startDayOfWeek);
@@ -287,6 +321,7 @@ const textCalendarMonthly = ({
     v => v.getTime()
   );
 
+  result += indent;
   for (const date of weekDates) {
     const dayOfWeek = dateToString(date, dayOfWeekFormat);
     if (weekDates.indexOf(date) === weekDates.length - 1) {
@@ -297,25 +332,80 @@ const textCalendarMonthly = ({
   }
   result += `\n`;
 
+  let todayFlag = false;
   for (const date of calendarDates) {
-    if (!otherMonthDate && !equalMonth(date, targetDate)) {
+    if (pickupDate && equalDate(date, pickupDate)) {
       if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result += `  `;
+        result +=
+          _subFirst(indent, indent.length - todayLeft.length) +
+          todayLeft +
+          dateToString(date, dateFormat) +
+          todayRight;
       } else {
-        result += space + `  `;
+        result +=
+          _subFirst(space, space.length - todayLeft.length) +
+          todayLeft +
+          dateToString(date, dateFormat) +
+          todayRight;
       }
+      todayFlag = true;
+    } else if (!otherMonthDate && !equalMonth(date, targetDate)) {
+      if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
+        result += indent + `  `;
+      } else {
+        result += (
+          !todayFlag ? space
+          : _subLast(space, space.length - todayRight.length)
+        ) +`  `;
+      }
+      todayFlag = false;
     } else {
       if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result += dateToString(date, dateFormat);
+        result += indent + dateToString(date, dateFormat);
       } else {
-        result += space + dateToString(date, dateFormat);
+        result += (
+          !todayFlag ? space
+          : _subLast(space, space.length - todayRight.length)
+        ) + dateToString(date, dateFormat);
       }
+      todayFlag = false;
     }
     if (dayOfWeekEnShort[date.getDay()] === weekEndDayOfWeek) {
       result += `\n`;
     }
   }
   return result;
+};
+
+const textSquareCalendar = (
+  targetDate,
+  dateToString,
+  {
+    startDayOfWeek,
+    headerFormat,
+    dayOfWeekFormat,
+    dateFormat,
+    space,
+    otherMonthDate,
+  }
+) => {
+  return _textSquareCalendar(
+    targetDate,
+    dateToString,
+    {
+      startDayOfWeek,
+      headerFormat,
+      dayOfWeekFormat,
+      dateFormat,
+      space,
+      otherMonthDate,
+
+      pickupDate: undefined,
+      indent: ``,
+      todayLeft: ``,
+      todayRight: ``,
+    }
+  );
 };
 
 module.exports = {
@@ -325,6 +415,6 @@ module.exports = {
   monthDayCount,
   dateToStringJp,
   getDateArrayWeeklyMonth,
-  textCalendarLineVertical,
-  textCalendarMonthly,
+  textVerticalCalendar,
+  textSquareCalendar,
 };

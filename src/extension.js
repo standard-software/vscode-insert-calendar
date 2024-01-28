@@ -5,8 +5,7 @@ const {
   getEditor,
   commandQuickPick,
 
-  insertText,
-  // getSelectedText,
+  insertTextNotSelected,
 } = require(`./lib/libVSCode.js`);
 
 const {
@@ -24,8 +23,8 @@ const {
   // monthDayCount,
   dateToStringJp,
   getDateArrayWeeklyMonth,
-  textCalendarLineVertical,
-  textCalendarMonthly,
+  textVerticalCalendar,
+  textSquareCalendar,
 } = require(`./lib/libDate.js`);
 
 const getCalendarSettings = (calendarType) => {
@@ -90,14 +89,12 @@ const selectCalendarType = ({
           label: dateToString(targetDate, setting.title),
           description: ``,
           func: () => {
-            const calendarText = textCalendarMonthly(
-              {
-                targetDate,
-                dateToString,
-                ...setting
-              }
+            const calendarText = textSquareCalendar(
+              targetDate,
+              dateToString,
+              setting,
             );
-            insertText(editor, calendarText)
+            insertTextNotSelected(editor, calendarText)
           }
         });
       }
@@ -107,17 +104,12 @@ const selectCalendarType = ({
           label: dateToString(targetDate, setting.title),
           description: ``,
           func: () => {
-            const targetDates = getDateArrayWeeklyMonth(
-              _Day(`today`), setting.startDayOfWeek
+            const calendarText = textVerticalCalendar(
+              _Day(`today`),
+              dateToString,
+              setting,
             );
-            const calendarText = textCalendarLineVertical(
-              {
-                targetDates,
-                dateToString,
-                ...setting,
-              }
-            );
-            insertText(editor, calendarText)
+            insertTextNotSelected(editor, calendarText)
           }
         });
       }
