@@ -61,13 +61,10 @@ const extensionMain = (commandName) => {
 
   const setting = {
     title: "MMMMM YYYY ddd D \"Space2\"",
-    headerFormat: "LMMMMM                YYYY",
+    headerFormat: "LMMMMM              YYYY",
     dayOfWeekFormat: "ddd",
     dateFormat: "SD",
-    indent: "  ",
     space: "  ",
-    todayLeft: "[",
-    todayRight: "]",
     otherMonthDate: false,
     startDayOfWeek: "Sun"
   };
@@ -77,10 +74,7 @@ const extensionMain = (commandName) => {
     headerFormat,
     dayOfWeekFormat,
     dateFormat,
-    indent,
     space,
-    todayLeft,
-    todayRight,
     otherMonthDate,
   } = setting;
 
@@ -93,14 +87,10 @@ const extensionMain = (commandName) => {
       targetDate,
       dateToString,
       startDayOfWeek,
-      pickupDate: new Date(),
       headerFormat,
       dayOfWeekFormat,
       dateFormat,
-      indent,
       space,
-      todayLeft,
-      todayRight,
       otherMonthDate,
     }
   );

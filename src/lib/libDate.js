@@ -257,14 +257,10 @@ const textCalendarMonthly = ({
   targetDate,
   dateToString,
   startDayOfWeek,
-  pickupDate,
   headerFormat,
   dayOfWeekFormat,
   dateFormat,
-  indent,
   space,
-  todayLeft,
-  todayRight,
   otherMonthDate,
 }) => {
   if (![`Sun`, `Mon`].includes(startDayOfWeek)) {
@@ -289,7 +285,6 @@ const textCalendarMonthly = ({
     v => v.getTime()
   );
 
-  result += indent;
   for (const date of weekDates) {
     const dayOfWeek = dateToString(date, dayOfWeekFormat);
     if (weekDates.indexOf(date) === weekDates.length - 1) {
@@ -300,43 +295,19 @@ const textCalendarMonthly = ({
   }
   result += `\n`;
 
-  let todayFlag = false;
   for (const date of calendarDates) {
-    if (pickupDate && equalDate(date, pickupDate)) {
+    if (!otherMonthDate && !equalMonth(date, targetDate)) {
       if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result +=
-          _subFirst(indent, indent.length - todayLeft.length) +
-          todayLeft +
-          dateToString(date, dateFormat) +
-          todayRight;
+        result += `  `;
       } else {
-        result +=
-          _subFirst(space, space.length - todayLeft.length) +
-          todayLeft +
-          dateToString(date, dateFormat) +
-          todayRight;
+        result += space + `  `;
       }
-      todayFlag = true;
-    } else if (!otherMonthDate && !equalMonth(date, targetDate)) {
-      if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result += indent + `  `;
-      } else {
-        result +=
-          (!todayFlag ? space
-            : _subLast(space, space.length - todayRight.length)) +
-            `  `;
-      }
-      todayFlag = false;
     } else {
       if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result += indent + dateToString(date, dateFormat);
+        result += dateToString(date, dateFormat);
       } else {
-        result +=
-          (!todayFlag ? space
-            : _subLast(space, space.length - todayRight.length)) +
-            dateToString(date, dateFormat);
+        result += space + dateToString(date, dateFormat);
       }
-      todayFlag = false;
     }
     if (dayOfWeekEnShort[date.getDay()] === weekEndDayOfWeek) {
       result += `\n`;
