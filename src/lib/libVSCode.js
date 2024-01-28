@@ -38,17 +38,6 @@ const commandQuickPick = (commands, placeHolder) => {
 };
 
 // VSCode editor.selections
-
-const equalSelectionItem = (itemA, itemB) => {
-  if (
-    itemA.line === itemB.line
-    && itemA.character === itemB.character
-  ) {
-    return true;
-  }
-  return false;
-}
-
 const insertTextUnSelect = (editor, str) => {
   editor.edit(editBuilder => {
     for (const selection of editor.selections) {
@@ -66,7 +55,10 @@ const insertText = (editor, str) => {
   }).then(() => {
     const newSelections = [];
     for (const selection of editor.selections) {
-      if (equalSelectionItem(selection.start, selection.end)) {
+      if (
+        selection.start.line === selection.end.line
+        && selection.start.character === selection.end.character
+      ) {
         const strLines = str.split(`\n`);
         const selectionStartLine = selection.start.line - (strLines.length - 1);
         const selectionStartCharactor =
@@ -101,7 +93,6 @@ module.exports = {
   getEditor,
   commandQuickPick,
 
-  equalSelectionItem,
   insertTextUnSelect,
   insertText,
   getSelectedText,
