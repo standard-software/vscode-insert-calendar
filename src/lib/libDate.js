@@ -229,29 +229,31 @@ const getEndDayOfWeek = (startDayOfWeek) => {
   }
 };
 
-// const textCalendarLineVertical = (targetDates,{
-//   pickupDate,
-//   headerFormat,
-//   todayFormat,
-//   lineFormat,
-// }) => {
-//   let result = ``;
-//   let headerBuffer = ``;
-//   for (const date of targetDates) {
-//     const header = dateToStringJp(date, headerFormat);
-//     if (headerBuffer !== header) {
-//       result += `${header}\n`;
-//     }
-//     headerBuffer = header;
-//     if (pickupDate && equalDate(date, pickupDate)) {
-//       result += dateToStringJp(date, todayFormat);
-//     } else {
-//       result += dateToStringJp(date, lineFormat);
-//     }
-//     result += `\n`;
-//   }
-//   return result;
-// };
+const textCalendarLineVertical = ({
+  targetDates,
+  dateToString,
+  pickupDate,
+  headerFormat,
+  todayFormat,
+  lineFormat,
+}) => {
+  let result = ``;
+  let headerBuffer = ``;
+  for (const date of targetDates) {
+    const header = dateToString(date, headerFormat);
+    if (headerBuffer !== header) {
+      result += `${header}\n`;
+    }
+    headerBuffer = header;
+    if (pickupDate && equalDate(date, pickupDate)) {
+      result += dateToString(date, todayFormat);
+    } else {
+      result += dateToString(date, lineFormat);
+    }
+    result += `\n`;
+  }
+  return result;
+};
 
 const textCalendarMonthly = ({
   targetDate,
@@ -323,6 +325,6 @@ module.exports = {
   monthDayCount,
   dateToStringJp,
   getDateArrayWeeklyMonth,
-  // textCalendarLineVertical,
+  textCalendarLineVertical,
   textCalendarMonthly,
 };

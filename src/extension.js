@@ -10,13 +10,21 @@ const {
 } = require(`./lib/libVSCode.js`);
 
 const {
+  // isUndefined,
+  // _dateToString,
+  // _Year,
+  // _Month,
+  _Day,
+} = require(`./parts/parts.js`);
+
+const {
   // equalMonth,
   // equalDate,
   // equalToday,
   // monthDayCount,
   dateToStringJp,
-  // getDateArrayWeeklyMonth,
-  // textCalendarLineVertical,
+  getDateArrayWeeklyMonth,
+  textCalendarLineVertical,
   textCalendarMonthly,
 } = require(`./lib/libDate.js`);
 
@@ -76,38 +84,45 @@ const selectCalendarType = ({
         {label: calendarType, kind: vscode.QuickPickItemKind.Separator}
       );
     }
-    for (const [index, setting] of settings.entries()) {
-      commands.push({
-        label: dateToString(targetDate, setting.title),
-        description: ``,
-        func: () => {
-          // _insertDateTime(dateType, targetDate, index, format);
-
-          const {
-            startDayOfWeek,
-            headerFormat,
-            dayOfWeekFormat,
-            dateFormat,
-            space,
-            otherMonthDate,
-          } = setting;
-
-          const calendarText = textCalendarMonthly(
-            {
-              targetDate,
-              dateToString,
-              startDayOfWeek,
-              headerFormat,
-              dayOfWeekFormat,
-              dateFormat,
-              space,
-              otherMonthDate,
-            }
-          );
-          insertText(editor, calendarText)
-
-        }
-      });
+    if (calendarType === `Square`) {
+      for (const [index, setting] of settings.entries()) {
+        commands.push({
+          label: dateToString(targetDate, setting.title),
+          description: ``,
+          func: () => {
+            const calendarText = textCalendarMonthly(
+              {
+                targetDate,
+                dateToString,
+                ...setting
+              }
+            );
+            insertText(editor, calendarText)
+          }
+        });
+      }
+    } else if (calendarType === `Vertical`) {
+      for (const [index, setting] of settings.entries()) {
+        commands.push({
+          label: dateToString(targetDate, setting.title),
+          description: ``,
+          func: () => {
+            const targetDates = getDateArrayWeeklyMonth(
+              _Day(`today`), setting.startDayOfWeek
+            );
+            const calendarText = textCalendarLineVertical(
+              {
+                targetDates,
+                dateToString,
+                ...setting,
+              }
+            );
+            insertText(editor, calendarText)
+          }
+        });
+      }
+    } else {
+      throw new Error(`selectCalendarType calendarType`);
     }
   }
   commandQuickPick(
@@ -124,7 +139,6 @@ const extensionMain = (commandName) => {
   switch (commandName) {
     case `SquareCalendarThisMonth`: {
       const setting = {
-        title: "MMMMM YYYY ddd D \"Space2\"",
         headerFormat: "LMMMMM              YYYY",
         dayOfWeekFormat: "ddd",
         dateFormat: "SD",
@@ -132,28 +146,31 @@ const extensionMain = (commandName) => {
         otherMonthDate: false,
         startDayOfWeek: "Sun"
       };
-
-      const {
-        startDayOfWeek,
-        headerFormat,
-        dayOfWeekFormat,
-        dateFormat,
-        space,
-        otherMonthDate,
-      } = setting;
-
       const targetDate = new Date();
-
       const calendarText = textCalendarMonthly(
         {
           targetDate,
           dateToString,
-          startDayOfWeek,
-          headerFormat,
-          dayOfWeekFormat,
-          dateFormat,
-          space,
-          otherMonthDate,
+          ...setting,
+        }
+      );
+      insertText(editor, calendarText)
+    }; break;
+
+    case `VerticalCalendarThisMonth`: {
+      const setting = {
+        headerFormat: "YYYY/MM",
+        lineFormat: "  DD ddd",
+        startDayOfWeek: "Sun"
+      };
+      const targetDates = getDateArrayWeeklyMonth(
+        _Day(`today`), setting.startDayOfWeek
+      );
+      const calendarText = textCalendarLineVertical(
+        {
+          targetDates,
+          dateToString,
+          ...setting,
         }
       );
       insertText(editor, calendarText)
@@ -179,6 +196,13 @@ function activate(context) {
     `vscode-insert-calendar.SquareCalendarThisMonth`,
     () => {
       extensionMain(`SquareCalendarThisMonth`);
+    }
+  );
+
+  registerCommand(context,
+    `vscode-insert-calendar.VerticalCalendarThisMonth`,
+    () => {
+      extensionMain(`VerticalCalendarThisMonth`);
     }
   );
 

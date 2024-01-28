@@ -133,7 +133,37 @@
               "startDayOfWeek": "Mon"
             }
           ],
-          "description": "Insert Calendar : Monthly Square Calendar"
+          "description": "Insert Calendar : Square Calendar"
+        },
+        "InsertCalendar.VerticalCalendar": {
+          "type": "array",
+          "default": [
+            {
+              "title": "YYYY/MM|  DD  ddd",
+              "headerFormat": "YYYY/MM",
+              "lineFormat": "  DD ddd",
+              "startDayOfWeek": "Sun"
+            },
+            {
+              "title": "MMM YYYY|  YYYY/MM/DD ddd",
+              "headerFormat": "MMM YYYY",
+              "lineFormat": "  YYYY/MM/DD ddd",
+              "startDayOfWeek": "Sun"
+            },
+            {
+              "title": "\"Start monday : \"YYYY/MM|  DD  ddd",
+              "headerFormat": "YYYY/MM",
+              "lineFormat": "  DD ddd",
+              "startDayOfWeek": "Mon"
+            },
+            {
+              "title": "\"Start monday : \"MMM YYYY|  YYYY/MM/DD ddd",
+              "headerFormat": "MMM YYYY",
+              "lineFormat": "  YYYY/MM/DD ddd",
+              "startDayOfWeek": "Mon"
+            }
+          ],
+          "description": "Insert Calendar : Vertical Calendar"
         }
       }
     },
@@ -141,6 +171,10 @@
       {
         "command": "vscode-insert-calendar.SquareCalendarThisMonth",
         "title": "Insert Calendar : Insert Square Calendar : This Month"
+      },
+      {
+        "command": "vscode-insert-calendar.VerticalCalendarThisMonth",
+        "title": "Insert Calendar : Insert Vertical Calendar : This Month"
       },
       {
         "command": "vscode-insert-calendar.SelectCalendarType",
