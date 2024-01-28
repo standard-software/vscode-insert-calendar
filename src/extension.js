@@ -178,7 +178,7 @@ const selectMonth = ({
         description: `▸`,
         func: () => { selectTenYear(_Year(11, dateThisYear)); }
       },
-    ], `Smart Insert Date | Select Date | Select Year range -100 to +100`);
+    ], `Insert Calendar : Select Month : Select Year range -100 to +100`);
   }
 
   const selectTenYear = (dateYear) => {
@@ -192,7 +192,7 @@ const selectMonth = ({
       });
     }
     commandQuickPick(commands,
-      `Smart Insert Date | Select Date | ` +
+      `Insert Calendar : Select Month : ` +
       `${dateToString(dateYear, `YYYY`)} - ${dateToString(_Year(89, dateYear), `YYYY`)}`);
   };
 
@@ -207,7 +207,7 @@ const selectMonth = ({
       });
     }
     commandQuickPick(commands,
-      `Smart Insert Date | Select Date | ` +
+      `Insert Calendar : Select Month : ` +
       `${dateToString(dateYear, `YYYY`)} - ${dateToString(_Year(9, dateYear), `YYYY`)}`);
   };
 
@@ -224,14 +224,14 @@ const selectMonth = ({
           selectCalendarType({
             editor, dateToString,
             targetDate,
-            placeHolder: `Insert Calendar : This Month : Select Calendar Type`,
+            placeHolder: `Insert Calendar : ${dateToString(targetDate, `YYYY-MM`)} : Select Calendar Type`,
             calendarTypes: [`Square`, `Vertical`],
           });
         },
       });
     }
     commandQuickPick(commands,
-      `Smart Insert Date | Select Date | ` +
+      `Insert Calendar : Select Month : ` +
       `${dateYear.getFullYear()}`);
   };
 
@@ -305,7 +305,7 @@ const selectMonth = ({
       description: `▸`,
       func: () => { selectDateRange200Year(); }
     },
-  ], `Smart Insert Date | Select Date`);
+  ], `Insert Calendar : Select Month`);
 }
 
 const extensionMain = (commandName) => {
@@ -314,46 +314,12 @@ const extensionMain = (commandName) => {
   const dateToString = createDateToString();
 
   switch (commandName) {
-    case `SquareCalendarThisMonth`: {
-      const setting = {
-        headerFormat: "LMMMMM              YYYY",
-        dayOfWeekFormat: "ddd",
-        dateFormat: "SD",
-        space: "  ",
-        otherMonthDate: false,
-        startDayOfWeek: "Sun"
-      };
-      insertText(editor,
-        textCalendarMonthly({
-          targetDate: new Date(),
-          dateToString,
-          ...setting,
-        })
-      )
-    }; break;
-
-    case `VerticalCalendarThisMonth`: {
-      const setting = {
-        headerFormat: "YYYY/MM",
-        lineFormat: "  DD ddd",
-        startDayOfWeek: "Sun"
-      };
-      insertText(editor,
-        textCalendarLineVertical({
-          targetDates: getDateArrayWeeklyMonth(
-            _Day(`today`), setting.startDayOfWeek
-          ),
-          dateToString,
-          ...setting,
-        })
-      )
-    }; break;
 
     case `SelectCalendarType`: {
       selectCalendarType({
         editor, dateToString,
         targetDate: new Date(),
-        placeHolder: `Insert Calendar : Select Calendar Type`,
+        placeHolder: `Insert Calendar : This Month : Select Calendar Type`,
         calendarTypes: [`Square`, `Vertical`],
       });
     }; break;
@@ -369,16 +335,6 @@ const extensionMain = (commandName) => {
 function activate(context) {
 
   registerCommand(context,
-    `vscode-insert-calendar.SquareCalendarThisMonth`,
-    () => { extensionMain(`SquareCalendarThisMonth`); }
-  );
-
-  registerCommand(context,
-    `vscode-insert-calendar.VerticalCalendarThisMonth`,
-    () => { extensionMain(`VerticalCalendarThisMonth`); }
-  );
-
-  registerCommand(context,
     `vscode-insert-calendar.SelectCalendarType`,
     () => { extensionMain(`SelectCalendarType`); }
   );
@@ -387,6 +343,7 @@ function activate(context) {
     `vscode-insert-calendar.SelectMonth`,
     () => { extensionMain(`SelectMonth`); }
   );
+
 }
 
 function deactivate() {}

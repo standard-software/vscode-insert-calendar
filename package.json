@@ -169,16 +169,8 @@
     },
     "commands": [
       {
-        "command": "vscode-insert-calendar.SquareCalendarThisMonth",
-        "title": "Insert Calendar : Insert Square Calendar : This Month"
-      },
-      {
-        "command": "vscode-insert-calendar.VerticalCalendarThisMonth",
-        "title": "Insert Calendar : Insert Vertical Calendar : This Month"
-      },
-      {
         "command": "vscode-insert-calendar.SelectCalendarType",
-        "title": "Insert Calendar : Select Calendar Type..."
+        "title": "Insert Calendar : This Month : Select Calendar Type..."
       },
       {
         "command": "vscode-insert-calendar.SelectMonth",
