@@ -39,16 +39,41 @@ const commandQuickPick = (commands, placeHolder) => {
 };
 
 // VSCode editor.selections
-const insertTextUnSelect = (editor, str) => {
+const insertText = (editor, str) => {
   editor.edit(editBuilder => {
     for (const selection of editor.selections) {
-      editBuilder.replace(selection, ``);
-      editBuilder.insert(selection.active, str);
+      editBuilder.replace(selection, str);
     }
   });
 };
 
-const insertText = (editor, str) => {
+const insertTextNotSelected = (editor, str) => {
+  editor.edit(editBuilder => {
+    for (const selection of editor.selections) {
+      editBuilder.replace(selection, str);
+    }
+  }).then(() => {
+    const newSelections = [];
+    for (const selection of editor.selections) {
+      if (
+        selection.start.line === selection.end.line
+        && selection.start.character === selection.end.character
+      ) {
+        newSelections.push(selection);
+      } else {
+        newSelections.push(new vscode.Selection(
+          selection.end.line,
+          selection.end.character,
+          selection.end.line,
+          selection.end.character
+        ));
+      }
+    }
+    editor.selections = newSelections;
+  });
+};
+
+const insertTextSelected = (editor, str) => {
   editor.edit(editBuilder => {
     for (const selection of editor.selections) {
       editBuilder.replace(selection, str);
@@ -94,7 +119,8 @@ module.exports = {
   getEditor,
   commandQuickPick,
 
-  insertTextUnSelect,
   insertText,
+  insertTextNotSelected,
+  insertTextSelected,
   getSelectedText,
 };
