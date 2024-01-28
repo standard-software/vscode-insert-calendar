@@ -32,7 +32,7 @@
       "type": "object",
       "title": "DateTimeCalendar",
       "properties": {
-        "SmartInsertDate.CustomDayOfWeekLong": {
+        "InsertCalendar.CustomDayOfWeekLong": {
           "default": {
             "Sun": "日曜日",
             "Mon": "月曜日",
@@ -42,9 +42,9 @@
             "Fri": "金曜日",
             "Sat": "土曜日"
           },
-          "description": "Smart Insert Date : CustomDayOfWeekLong"
+          "description": "Insert Calendar : CustomDayOfWeekLong"
         },
-        "SmartInsertDate.CustomDayOfWeekShort": {
+        "InsertCalendar.CustomDayOfWeekShort": {
           "default": {
             "Sun": "日",
             "Mon": "月",
@@ -54,16 +54,99 @@
             "Fri": "金",
             "Sat": "土"
           },
-          "description": "Smart Insert Date : CustomDayOfWeekShort"
+          "description": "Insert Calendar : CustomDayOfWeekShort"
+        },
+
+        "InsertCalendar.SquareCalendar": {
+          "type": "array",
+          "default": [
+            {
+              "title": "MMMMM YYYY ddd D \"Space2\"",
+              "headerFormat": "LMMMMM              YYYY",
+              "dayOfWeekFormat": "ddd",
+              "dateFormat": "SD",
+              "space": "  ",
+              "otherMonthDate": false,
+              "startDayOfWeek": "Sun"
+            },
+            {
+              "title": "MMMM YYYY ddd DD \"Space2 OtherMonth\"",
+              "headerFormat": "MMMM YYYY",
+              "dayOfWeekFormat": "ddd",
+              "dateFormat": "DD",
+              "space": "  ",
+              "otherMonthDate": true,
+              "startDayOfWeek": "Sun"
+            },
+            {
+              "title": "YYYY MMMMM dd D \"Space1\"",
+              "headerFormat": "YYYY       RMMMMM",
+              "dayOfWeekFormat": "dd",
+              "dateFormat": "SD",
+              "space": " ",
+              "otherMonthDate": false,
+              "startDayOfWeek": "Sun"
+            },
+            {
+              "title": "YYYY/MM ddd DD \"Space1 OtherMonth\"",
+              "headerFormat": "YYYY/MM",
+              "dayOfWeekFormat": "ddd",
+              "dateFormat": "DD",
+              "space": " ",
+              "otherMonthDate": true,
+              "startDayOfWeek": "Sun"
+            },
+            {
+              "title": "\"Start monday : \"MMMMM YYYY ddd D \"Space2\"",
+              "headerFormat": "LMMMMM              YYYY",
+              "dayOfWeekFormat": "ddd",
+              "dateFormat": "SD",
+              "space": "  ",
+              "otherMonthDate": false,
+              "startDayOfWeek": "Mon"
+            },
+            {
+              "title": "\"Start monday : \"MMMM YYYY ddd DD \"Space2 OtherMonth\"",
+              "headerFormat": "MMMM YYYY",
+              "dayOfWeekFormat": "ddd",
+              "dateFormat": "DD",
+              "space": "  ",
+              "otherMonthDate": true,
+              "startDayOfWeek": "Mon"
+            },
+            {
+              "title": "\"Start monday : \"YYYY MMMMM dd D \"Space1\"",
+              "headerFormat": "YYYY       RMMMMM",
+              "dayOfWeekFormat": "dd",
+              "dateFormat": "SD",
+              "space": " ",
+              "otherMonthDate": false,
+              "startDayOfWeek": "Mon"
+            },
+            {
+              "title": "\"Start monday : \"YYYY/MM ddd DD \"Space1 OtherMonth\"",
+              "headerFormat": "YYYY/MM",
+              "dayOfWeekFormat": "ddd",
+              "dateFormat": "DD",
+              "space": " ",
+              "otherMonthDate": true,
+              "startDayOfWeek": "Mon"
+            }
+          ],
+          "description": "Insert Calendar : Monthly Square Calendar"
         }
-
-
       }
     },
-    "commands": [{
-      "command": "vscode-insert-calendar.SquareCalendarThisMonth",
-      "title": "Insert Calendar : Insert Square Calendar : This Month"
-    }]
+    "commands": [
+      {
+        "command": "vscode-insert-calendar.SquareCalendarThisMonth",
+        "title": "Insert Calendar : Insert Square Calendar : This Month"
+      },
+      {
+        "command": "vscode-insert-calendar.SelectCalendarType",
+        "title": "Insert Calendar : Select Calendar Type..."
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint --fix ./src",
