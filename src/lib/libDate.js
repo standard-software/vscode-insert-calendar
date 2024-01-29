@@ -293,7 +293,8 @@ const _textSquareCalendar = (
     dayOfWeekFormat,
     dateFormat,
     indent,
-    space,
+    spaceDayOfWeek,
+    spaceDate,
     todayLeft,
     todayRight,
     otherMonthDate,
@@ -327,7 +328,7 @@ const _textSquareCalendar = (
     if (weekDates.indexOf(date) === weekDates.length - 1) {
       result += dayOfWeek;
     } else {
-      result += dayOfWeek + _subLast(space, space.length - (dayOfWeek.length - 2));
+      result += dayOfWeek + spaceDayOfWeek;
     }
   }
   result += `\n`;
@@ -343,7 +344,7 @@ const _textSquareCalendar = (
           todayRight;
       } else {
         result +=
-          _subFirst(space, space.length - todayLeft.length) +
+          _subFirst(spaceDate, spaceDate.length - todayLeft.length) +
           todayLeft +
           dateToString(date, dateFormat) +
           todayRight;
@@ -354,8 +355,8 @@ const _textSquareCalendar = (
         result += indent + `  `;
       } else {
         result += (
-          !todayFlag ? space
-          : _subLast(space, space.length - todayRight.length)
+          !todayFlag ? spaceDate
+          : _subLast(spaceDate, spaceDate.length - todayRight.length)
         ) +`  `;
       }
       todayFlag = false;
@@ -364,8 +365,8 @@ const _textSquareCalendar = (
         result += indent + dateToString(date, dateFormat);
       } else {
         result += (
-          !todayFlag ? space
-          : _subLast(space, space.length - todayRight.length)
+          !todayFlag ? spaceDate
+          : _subLast(spaceDate, spaceDate.length - todayRight.length)
         ) + dateToString(date, dateFormat);
       }
       todayFlag = false;
@@ -385,7 +386,8 @@ const textSquareCalendar = (
     headerFormat,
     dayOfWeekFormat,
     dateFormat,
-    space,
+    spaceDayOfWeek,
+    spaceDate,
     otherMonthDate,
   }
 ) => {
@@ -397,7 +399,8 @@ const textSquareCalendar = (
       headerFormat,
       dayOfWeekFormat,
       dateFormat,
-      space,
+      spaceDayOfWeek,
+      spaceDate,
       otherMonthDate,
 
       pickupDate: undefined,

@@ -61,75 +61,53 @@
           "type": "array",
           "default": [
             {
-              "title": "MMMMM YYYY ddd D \"Space2\"",
+              "title": "\"Space2\" : MMMMM YYYY : ddd SD",
               "headerFormat": "LMMMMM              YYYY",
               "dayOfWeekFormat": "ddd",
               "dateFormat": "SD",
-              "space": "  ",
+              "spaceDayOfWeek": " ",
+              "spaceDate": "  ",
               "otherMonthDate": false,
               "startDayOfWeek": "Sun"
             },
             {
-              "title": "MMMM YYYY ddd DD \"Space2 OtherMonth\"",
+              "title": "\"Space2 OtherMonth\" : MMMM YYYY : ddd DD",
               "headerFormat": "MMMM YYYY",
               "dayOfWeekFormat": "ddd",
               "dateFormat": "DD",
-              "space": "  ",
+              "spaceDayOfWeek": " ",
+              "spaceDate": "  ",
               "otherMonthDate": true,
               "startDayOfWeek": "Sun"
             },
             {
-              "title": "YYYY MMMMM dd D \"Space1\"",
+              "title": "\"Space1\" : YYYY MMMMM : dd D",
               "headerFormat": "YYYY       RMMMMM",
               "dayOfWeekFormat": "dd",
               "dateFormat": "SD",
-              "space": " ",
+              "spaceDayOfWeek": " ",
+              "spaceDate": " ",
               "otherMonthDate": false,
               "startDayOfWeek": "Sun"
             },
             {
-              "title": "YYYY/MM ddd DD \"Space1 OtherMonth\"",
+              "title": "\"Space1 OtherMonth\" : YYYY/MM : ddd DD",
               "headerFormat": "YYYY/MM",
               "dayOfWeekFormat": "ddd",
               "dateFormat": "DD",
-              "space": " ",
+              "spaceDayOfWeek": "",
+              "spaceDate": " ",
               "otherMonthDate": true,
               "startDayOfWeek": "Sun"
             },
             {
-              "title": "\"Start monday : \"MMMMM YYYY ddd D \"Space2\"",
+              "title": "\"Start monday\" : \"Space2\" : MMMMM YYYY : ddd D",
               "headerFormat": "LMMMMM              YYYY",
               "dayOfWeekFormat": "ddd",
               "dateFormat": "SD",
-              "space": "  ",
+              "spaceDayOfWeek": " ",
+              "spaceDate": "  ",
               "otherMonthDate": false,
-              "startDayOfWeek": "Mon"
-            },
-            {
-              "title": "\"Start monday : \"MMMM YYYY ddd DD \"Space2 OtherMonth\"",
-              "headerFormat": "MMMM YYYY",
-              "dayOfWeekFormat": "ddd",
-              "dateFormat": "DD",
-              "space": "  ",
-              "otherMonthDate": true,
-              "startDayOfWeek": "Mon"
-            },
-            {
-              "title": "\"Start monday : \"YYYY MMMMM dd D \"Space1\"",
-              "headerFormat": "YYYY       RMMMMM",
-              "dayOfWeekFormat": "dd",
-              "dateFormat": "SD",
-              "space": " ",
-              "otherMonthDate": false,
-              "startDayOfWeek": "Mon"
-            },
-            {
-              "title": "\"Start monday : \"YYYY/MM ddd DD \"Space1 OtherMonth\"",
-              "headerFormat": "YYYY/MM",
-              "dayOfWeekFormat": "ddd",
-              "dateFormat": "DD",
-              "space": " ",
-              "otherMonthDate": true,
               "startDayOfWeek": "Mon"
             }
           ],

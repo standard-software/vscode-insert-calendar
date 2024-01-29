@@ -105,7 +105,7 @@ const selectCalendarType = ({
           description: ``,
           func: () => {
             const calendarText = textVerticalCalendar(
-              _Day(`today`),
+              targetDate,
               dateToString,
               setting,
             );

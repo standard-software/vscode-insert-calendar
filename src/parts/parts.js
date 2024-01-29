@@ -13,6 +13,7 @@ const { _deleteIndex } = require(`./string/_deleteIndex.js`);
 const { _deleteLength } = require(`./string/_deleteLength.js`);
 const { _deleteFirst } = require(`./string/_deleteFirst.js`);
 const { _deleteLast } = require(`./string/_deleteLast.js`);
+const { _excludeLast } = require(`./string/_excludeLast.js`);
 const { _trimFirst } = require(`./string/_trimFirst.js`);
 const { _trimLast } = require(`./string/_trimLast.js`);
 const { _trim } = require(`./string/_trim.js`);
@@ -49,6 +50,7 @@ module.exports = {
   _isFirst, _isLast,
   _deleteIndex, _deleteLength,
   _deleteFirst, _deleteLast,
+  _excludeLast,
   _trimFirst, _trimLast, _trim,
   _subLength, _subIndex,
   _subFirst, _subLast,
