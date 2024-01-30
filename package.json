@@ -2,6 +2,7 @@
   "name": "vscode-insert-calendar",
   "displayName": "vscode-insert-calendar",
   "description": "This extension inserts formatted calendar into the editor.",
+  "version": "1.0.0",
   "icon": "vscode-insert-calendar_icon.png",
   "publisher": "SatoshiYamamoto",
   "author": {
@@ -178,7 +179,7 @@
   },
   "scripts": {
     "lint": "eslint --fix ./src",
-    "pack": "npx -y vsce package && code --install-extension vscode-insert-calendar-0.0.1.vsix",
+    "pack": "npx -y vsce package && code --install-extension vscode-insert-calendar-1.0.0.vsix",
     "": ""
   },
   "devDependencies": {
