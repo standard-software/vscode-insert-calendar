@@ -415,7 +415,7 @@ const textVerticalCalendar = (
 const _textSquareCalendar = (
   targetDate,
   dateToString,
-  {format, startDayOfWeek, otherMonthDate},
+  { format, startDayOfWeek, otherMonthDate },
 ) => {
   if (format.length !== 4) {
     throw new Error(`_textSquareCalendar setting`);
@@ -509,42 +509,29 @@ const _textSquareCalendar = (
 const textSquareCalendar = (
   targetDate,
   dateToString,
-  {
-    startDayOfWeek,
-    headerFormat,
-    dayOfWeekFormat,
-    dateFormat,
-    spaceDayOfWeek,
-    spaceDate,
-    otherMonthDate,
-  }
+  { format, startDayOfWeek, otherMonthDate },
 ) => {
-  const setting = {
-    startDayOfWeek: `Sun`,
-    otherMonthDate: false,
-    format: [
-      [
-        `+----------------------------------+`,
-        `|YYYY/MM                           |`,
-        [`|`, `DDD曜`, ` `, `|`],
-        `+----------------------------------+`
-      ],
-      [
-        [`| `, ` SD`, `  `, `|`],
-      ],
-      [
-        `+ - - - - - - - - - - - - - - - - -+`
-      ],
-      [
-        `+----------------------------------+`,
-      ],
-    ]
+  if (format.length !== 4) {
+    return null;
+  }
+  for (const formatItems of format) {
+    if (!Array.isArray(formatItems)) {
+      return null;
+    }
+    if (formatItems.length === 0) { continue; }
+    if (
+      formatItems.every(
+        item => isString(item)
+        || (Array.isArray(item) && item.length === 4)
+      )
+    ) { continue; }
+    return null;
   }
 
   return _textSquareCalendar(
     targetDate,
     dateToString,
-    setting,
+    { format, startDayOfWeek, otherMonthDate },
   )
 }
 

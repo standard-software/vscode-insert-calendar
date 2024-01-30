@@ -9,6 +9,7 @@ const {
 } = require(`./lib/libVSCode.js`);
 
 const {
+  isNull,
   // isUndefined,
   // _dateToString,
   _Year,
@@ -22,7 +23,6 @@ const {
   // equalToday,
   // monthDayCount,
   dateToStringJp,
-  getDateArrayWeeklyMonth,
   textVerticalCalendar,
   textSquareCalendar,
 } = require(`./lib/libDate.js`);
@@ -94,7 +94,13 @@ const selectCalendarType = ({
               dateToString,
               setting,
             );
-            insertTextNotSelected(editor, calendarText)
+            if (isNull(calendarText)) {
+              vscode.window.showInformationMessage(
+                `There is an error in the calendar settings.`
+              );
+            } else {
+              insertTextNotSelected(editor, calendarText)
+            }
           }
         });
       }

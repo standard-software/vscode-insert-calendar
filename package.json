@@ -61,54 +61,74 @@
           "type": "array",
           "default": [
             {
-              "title": "\"Space2\" : MMMMM YYYY : ddd SD",
-              "headerFormat": "LMMMMM              YYYY",
-              "dayOfWeekFormat": "ddd",
-              "dateFormat": "SD",
-              "spaceDayOfWeek": " ",
-              "spaceDate": "  ",
-              "otherMonthDate": false,
-              "startDayOfWeek": "Sun"
-            },
-            {
-              "title": "\"Space2 OtherMonth\" : MMMM YYYY : ddd DD",
-              "headerFormat": "MMMM YYYY",
-              "dayOfWeekFormat": "ddd",
-              "dateFormat": "DD",
-              "spaceDayOfWeek": " ",
-              "spaceDate": "  ",
-              "otherMonthDate": true,
-              "startDayOfWeek": "Sun"
-            },
-            {
               "title": "\"Space1\" : YYYY MMMMM : dd D",
-              "headerFormat": "YYYY       RMMMMM",
-              "dayOfWeekFormat": "dd",
-              "dateFormat": "SD",
-              "spaceDayOfWeek": " ",
-              "spaceDate": " ",
+              "format": [
+                [
+                  "YYYY       RMMMMM",
+                  ["","dd", " ", ""]
+                ],
+                [
+                  ["", "SD", " ", ""]
+                ],
+                [],
+                []
+              ],
               "otherMonthDate": false,
               "startDayOfWeek": "Sun"
             },
             {
-              "title": "\"Space1 OtherMonth\" : YYYY/MM : ddd DD",
-              "headerFormat": "YYYY/MM",
-              "dayOfWeekFormat": "ddd",
-              "dateFormat": "DD",
-              "spaceDayOfWeek": "",
-              "spaceDate": " ",
+              "title": "\"Space2\" : MMMMM YYYY : ddd SD",
+              "format": [
+                [
+                  "LMMMMM              YYYY",
+                  ["","ddd", " ", ""]
+                ],
+                [
+                  [" ", "SD", "  ", ""]
+                ],
+                [],
+                []
+              ],
+              "otherMonthDate": false,
+              "startDayOfWeek": "Sun"
+            },
+            {
+              "title": "\"Space2 OtherMonth StartMonday\" : MMMM YYYY : ddd DD",
+              "format": [
+                [
+                  "MMMM                   YYYY",
+                  ["","ddd", " ", ""]
+                ],
+                [
+                  [" ", "DD", "  ", ""]
+                ],
+                [],
+                []
+              ],
               "otherMonthDate": true,
-              "startDayOfWeek": "Sun"
+              "startDayOfWeek": "Mon"
             },
             {
-              "title": "\"Start monday\" : \"Space2\" : MMMMM YYYY : ddd D",
-              "headerFormat": "LMMMMM              YYYY",
-              "dayOfWeekFormat": "ddd",
-              "dateFormat": "SD",
-              "spaceDayOfWeek": " ",
-              "spaceDate": "  ",
+              "title": "\"Frame\" : MMMM YYYY : ddd DD",
+              "format": [
+                [
+                  "+-----------------------------------------+",
+                  "| LMMMMM                          YYYY |",
+                  ["|"," ddd ", ":", "|"],
+                  "+-----------------------------------------+"
+                ],
+                [
+                  ["|", "  DD  ", ":", "|"]
+                ],
+                [
+                  "+ - - - - - - - - - - - - - - - - - - - - +"
+                ],
+                [
+                  "+-----------------------------------------+"
+                ]
+              ],
               "otherMonthDate": false,
-              "startDayOfWeek": "Mon"
+              "startDayOfWeek": "Sun"
             }
           ],
           "description": "Insert Calendar : Square Calendar"
