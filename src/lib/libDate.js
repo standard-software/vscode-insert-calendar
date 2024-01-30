@@ -1,4 +1,5 @@
 const {
+  isString,
   _dateToString,
   _dayOfWeek,
   _nameOfMonth,
@@ -283,100 +284,227 @@ const textVerticalCalendar = (
   );
 }
 
+// const _textSquareCalendar = (
+//   targetDate,
+//   dateToString,
+//   {
+//     startDayOfWeek,
+//     pickupDate,
+//     headerFormat,
+//     dayOfWeekFormat,
+//     dateFormat,
+//     indent,
+//     spaceDayOfWeek,
+//     spaceDate,
+//     todayLeft,
+//     todayRight,
+//     otherMonthDate,
+//   }
+// ) => {
+//   if (![`Sun`, `Mon`].includes(startDayOfWeek)) {
+//     throw new Error(`_textSquareCalendar startDayOfWeek`);
+//   }
+//   const dayOfWeekEnShort = _dayOfWeek.names.EnglishShort();
+//   const weekEndDayOfWeek = getEndDayOfWeek(startDayOfWeek);
+
+//   const dateMonthStart = _Month(`this`, targetDate);
+//   const dateMonthEnd = _Day(-1, _Month(1, targetDate));
+
+//   let result = `${dateToString(dateMonthStart, headerFormat)}\n`;
+
+//   const weekDates = getDateArrayInWeek(dateMonthStart, startDayOfWeek);
+
+//   const calendarDates = _unique(
+//     [
+//       ...weekDates,
+//       ...getDateArrayInMonth(targetDate),
+//       ...getDateArrayInWeek(dateMonthEnd, startDayOfWeek),
+//     ],
+//     v => v.getTime()
+//   );
+
+//   result += indent;
+//   for (const date of weekDates) {
+//     const dayOfWeek = dateToString(date, dayOfWeekFormat);
+//     if (weekDates.indexOf(date) === weekDates.length - 1) {
+//       result += dayOfWeek;
+//     } else {
+//       result += dayOfWeek + spaceDayOfWeek;
+//     }
+//   }
+//   result += `\n`;
+
+//   let todayFlag = false;
+//   for (const date of calendarDates) {
+//     if (pickupDate && equalDate(date, pickupDate)) {
+//       if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
+//         result +=
+//           _subFirst(indent, indent.length - todayLeft.length) +
+//           todayLeft +
+//           dateToString(date, dateFormat) +
+//           todayRight;
+//       } else {
+//         result +=
+//           _subFirst(spaceDate, spaceDate.length - todayLeft.length) +
+//           todayLeft +
+//           dateToString(date, dateFormat) +
+//           todayRight;
+//       }
+//       todayFlag = true;
+//     } else if (!otherMonthDate && !equalMonth(date, targetDate)) {
+//       if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
+//         result += indent + `  `;
+//       } else {
+//         result += (
+//           !todayFlag ? spaceDate
+//           : _subLast(spaceDate, spaceDate.length - todayRight.length)
+//         ) +`  `;
+//       }
+//       todayFlag = false;
+//     } else {
+//       if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
+//         result += indent + dateToString(date, dateFormat);
+//       } else {
+//         result += (
+//           !todayFlag ? spaceDate
+//           : _subLast(spaceDate, spaceDate.length - todayRight.length)
+//         ) + dateToString(date, dateFormat);
+//       }
+//       todayFlag = false;
+//     }
+//     if (dayOfWeekEnShort[date.getDay()] === weekEndDayOfWeek) {
+//       result += `\n`;
+//     }
+//   }
+//   return result;
+// };
+
+// const textSquareCalendar = (
+//   targetDate,
+//   dateToString,
+//   {
+//     startDayOfWeek,
+//     headerFormat,
+//     dayOfWeekFormat,
+//     dateFormat,
+//     spaceDayOfWeek,
+//     spaceDate,
+//     otherMonthDate,
+//   }
+// ) => {
+//   return _textSquareCalendar(
+//     targetDate,
+//     dateToString,
+//     {
+//       startDayOfWeek,
+//       headerFormat,
+//       dayOfWeekFormat,
+//       dateFormat,
+//       spaceDayOfWeek,
+//       spaceDate,
+//       otherMonthDate,
+
+//       pickupDate: undefined,
+//       indent: ``,
+//       todayLeft: ``,
+//       todayRight: ``,
+//     }
+//   );
+// };
+
 const _textSquareCalendar = (
   targetDate,
   dateToString,
-  {
-    startDayOfWeek,
-    pickupDate,
-    headerFormat,
-    dayOfWeekFormat,
-    dateFormat,
-    indent,
-    spaceDayOfWeek,
-    spaceDate,
-    todayLeft,
-    todayRight,
-    otherMonthDate,
-  }
+  {format, startDayOfWeek, otherMonthDate},
 ) => {
+  if (format.length !== 4) {
+    throw new Error(`_textSquareCalendar setting`);
+  }
+  for (const formatItems of format) {
+    if (!Array.isArray(formatItems)) {
+      throw new Error(`_textSquareCalendar setting`);
+    }
+    if (formatItems.length === 0) { continue; }
+    if (
+      formatItems.every(
+        item => isString(item)
+        || (Array.isArray(item) && item.length === 4)
+      )
+    ) { continue; }
+    throw new Error(`_textSquareCalendar setting`);
+  }
+
   if (![`Sun`, `Mon`].includes(startDayOfWeek)) {
     throw new Error(`_textSquareCalendar startDayOfWeek`);
   }
   const dayOfWeekEnShort = _dayOfWeek.names.EnglishShort();
   const weekEndDayOfWeek = getEndDayOfWeek(startDayOfWeek);
-
   const dateMonthStart = _Month(`this`, targetDate);
   const dateMonthEnd = _Day(-1, _Month(1, targetDate));
 
-  let result = `${dateToString(dateMonthStart, headerFormat)}\n`;
-
-  const weekDates = getDateArrayInWeek(dateMonthStart, startDayOfWeek);
+  const startWeekDates = getDateArrayInWeek(dateMonthStart, startDayOfWeek);
 
   const calendarDates = _unique(
     [
-      ...weekDates,
+      ...startWeekDates,
       ...getDateArrayInMonth(targetDate),
       ...getDateArrayInWeek(dateMonthEnd, startDayOfWeek),
     ],
     v => v.getTime()
   );
 
-  result += indent;
-  for (const date of weekDates) {
-    const dayOfWeek = dateToString(date, dayOfWeekFormat);
-    if (weekDates.indexOf(date) === weekDates.length - 1) {
-      result += dayOfWeek;
-    } else {
-      result += dayOfWeek + spaceDayOfWeek;
-    }
-  }
-  result += `\n`;
-
-  let todayFlag = false;
+  const calendarWeeks = [];
+  let calendarWeek = [];
   for (const date of calendarDates) {
-    if (pickupDate && equalDate(date, pickupDate)) {
-      if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result +=
-          _subFirst(indent, indent.length - todayLeft.length) +
-          todayLeft +
-          dateToString(date, dateFormat) +
-          todayRight;
-      } else {
-        result +=
-          _subFirst(spaceDate, spaceDate.length - todayLeft.length) +
-          todayLeft +
-          dateToString(date, dateFormat) +
-          todayRight;
-      }
-      todayFlag = true;
-    } else if (!otherMonthDate && !equalMonth(date, targetDate)) {
-      if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result += indent + `  `;
-      } else {
-        result += (
-          !todayFlag ? spaceDate
-          : _subLast(spaceDate, spaceDate.length - todayRight.length)
-        ) +`  `;
-      }
-      todayFlag = false;
-    } else {
-      if (dayOfWeekEnShort[date.getDay()] === startDayOfWeek) {
-        result += indent + dateToString(date, dateFormat);
-      } else {
-        result += (
-          !todayFlag ? spaceDate
-          : _subLast(spaceDate, spaceDate.length - todayRight.length)
-        ) + dateToString(date, dateFormat);
-      }
-      todayFlag = false;
-    }
+    calendarWeek.push(date);
     if (dayOfWeekEnShort[date.getDay()] === weekEndDayOfWeek) {
-      result += `\n`;
+      calendarWeeks.push(calendarWeek);
+      calendarWeek = [];
     }
   }
+
+  let result = ``;
+  const resultPlusItem = (item, weekDates, otherMonthDate) => {
+    if (isString(item)) {
+      result += `${dateToString(dateMonthStart, item)}\n`;
+    } else {
+      result += item[0];
+      result += weekDates.map(
+        date => {
+          const result = dateToString(date, item[1]);
+          if (otherMonthDate) {
+            return result;
+          } else {
+            if (equalMonth(date, targetDate)) {
+              return result;
+            } else {
+              return ' '.repeat(result.length)
+            }
+          }
+        }
+      ).join(item[2]);
+      result += `${item[3]}\n`;
+    }
+  }
+  for (const item of format[0]) {
+    resultPlusItem(item, startWeekDates, true);
+  }
+
+  for (const weekDates of calendarWeeks) {
+    for (const item of format[1]) {
+      resultPlusItem(item, weekDates, otherMonthDate);
+    }
+    if (weekDates === calendarWeeks.at(-1)) { break; }
+    for (const item of format[2]) {
+      resultPlusItem(item, weekDates, otherMonthDate);
+    }
+  }
+  for (const item of format[3]) {
+    resultPlusItem(item, startWeekDates, true);
+  }
+
   return result;
-};
+}
 
 const textSquareCalendar = (
   targetDate,
@@ -391,25 +519,34 @@ const textSquareCalendar = (
     otherMonthDate,
   }
 ) => {
+  const setting = {
+    startDayOfWeek: `Sun`,
+    otherMonthDate: false,
+    format: [
+      [
+        `+----------------------------------+`,
+        `|YYYY/MM                           |`,
+        [`|`, `DDD曜`, ` `, `|`],
+        `+----------------------------------+`
+      ],
+      [
+        [`| `, ` SD`, `  `, `|`],
+      ],
+      [
+        `+ - - - - - - - - - - - - - - - - -+`
+      ],
+      [
+        `+----------------------------------+`,
+      ],
+    ]
+  }
+
   return _textSquareCalendar(
     targetDate,
     dateToString,
-    {
-      startDayOfWeek,
-      headerFormat,
-      dayOfWeekFormat,
-      dateFormat,
-      spaceDayOfWeek,
-      spaceDate,
-      otherMonthDate,
-
-      pickupDate: undefined,
-      indent: ``,
-      todayLeft: ``,
-      todayRight: ``,
-    }
-  );
-};
+    setting,
+  )
+}
 
 module.exports = {
   equalMonth,
